@@ -11,7 +11,7 @@
 
 A state-of-the-art, ultra-responsive **MERN Stack Project Management & Freelancer Workspace Tool** featuring real-time task discussions, single-session token security, audit trail logging, interactive Gantt timeline views, deadline alerts, and 1-click CSV/PDF exports.
 
-[🌐 View Live App](https://jigcks-workspace.netlify.app/) · [🐞 Report Bug](https://github.com/Kanhiya-Gulati/jigcks-workspace/issues) · [✨ Request Feature](https://github.com/Kanhiya-Gulati/jigcks-workspace/issues)
+[🌐 View Live Application](https://jigcks-workspace.netlify.app/) · [🐞 Report Bug](https://github.com/Kanhiya-Gulati/jigcks-workspace/issues) · [✨ Request Feature](https://github.com/Kanhiya-Gulati/jigcks-workspace/issues)
 
 </div>
 
@@ -61,15 +61,9 @@ A state-of-the-art, ultra-responsive **MERN Stack Project Management & Freelance
 
 ---
 
-## 🚀 Live Demo & Test Credentials
+## 🌐 Live Application Link
 
-You can test the application live at: **[https://jigcks-workspace.netlify.app/](https://jigcks-workspace.netlify.app/)**
-
-| Role | Username | Password | Access Level |
-| :--- | :--- | :--- | :--- |
-| **Admin** | `admin` | `admin123` | Full Admin Controls (Create Projects, Assign Freelancers, Edit/Delete Tasks) |
-| **Freelancer** | `kanhiya` | `password123` | Assigned Tasks Overview, Status Toggles, Scoped Discussion |
-| **Freelancer** | `aastha` | `password123` | Assigned Tasks Overview, Status Toggles, Scoped Discussion |
+Access the live application here: **[https://jigcks-workspace.netlify.app/](https://jigcks-workspace.netlify.app/)**
 
 ---
 
