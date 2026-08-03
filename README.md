@@ -13,7 +13,48 @@ A state-of-the-art, ultra-responsive **MERN Stack Project Management & Freelance
 
 [🌐 View Live Application](https://jigcks-workspace.netlify.app/) · [🐞 Report Bug](https://github.com/Kanhiya-Gulati/jigcks-workspace/issues) · [✨ Request Feature](https://github.com/Kanhiya-Gulati/jigcks-workspace/issues)
 
+<br/>
+
+![Jigcks Workspace Dashboard Showcase](docs/screenshots/dashboard.png)
+
 </div>
+
+---
+
+## 🖼️ Application Screenshots & UI Showcase
+
+### 1. 🖥️ Executive Dashboard & Project Overview
+*Clean glassmorphism dashboard displaying active project stats, progress indicators, assigned freelancers, start dates, and target deadlines.*
+
+![Dashboard View](docs/screenshots/dashboard.png)
+
+---
+
+### 2. 📋 Master Task Checklist & Filter Controls
+*High-granularity micro-task checklist with section headers, component/file route tags, status badges, and assignee selectors.*
+
+![Master Task Checklist Table](docs/screenshots/master_checklist.png)
+
+---
+
+### 3. 📜 Real-Time Audit Trail & Activity Logging
+*Live event logging capturing all status changes, task updates, reassignments, and comments with user avatars and relative time tags.*
+
+![Activity Audit Log](docs/screenshots/activity_audit_log.png)
+
+---
+
+### 4. ➕ Project Creation & Freelancer Assignment
+*Intuitive modal interface to create projects, configure start & target deadline dates, and assign team freelancers.*
+
+![Create Project Modal](docs/screenshots/create_project_modal.jpg)
+
+---
+
+### 5. 📊 Project Overview, Exports & View Tabs
+*Integrated header featuring overall progress bar, CSV/PDF export controls, and seamless view switcher tabs.*
+
+![Project Detail Header](docs/screenshots/project_detail.png)
 
 ---
 
@@ -123,6 +164,8 @@ jigcks-workspace/
 │   │   └── App.jsx
 │   ├── package.json
 │   └── vite.config.js
+├── docs/                       # High-resolution Screenshots & Documentation
+│   └── screenshots/
 ├── server/                     # Node.js Express Backend API
 │   ├── config/                 # MongoDB Connection
 │   ├── middleware/             # Single-Session Auth Middleware
