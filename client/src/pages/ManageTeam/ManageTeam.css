@@ -1,0 +1,391 @@
+.manage-team {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  animation: fadeIn 0.4s ease;
+}
+
+.team-header-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 24px 32px;
+  background: var(--bg-card, #12121a);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.06));
+  border-radius: 16px;
+}
+
+.header-info h2 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.header-info .subtitle {
+  color: var(--text-secondary, #a0a0b8);
+  font-size: 14px;
+}
+
+/* Modal Overlay & Card */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  animation: fadeIn 0.2s ease;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 480px;
+  background: #12121a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24px;
+}
+
+.modal-title {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.icon-badge {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(108, 92, 231, 0.15);
+  color: #6C5CE7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-title h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 2px;
+}
+
+.modal-title p {
+  font-size: 12px;
+  color: var(--text-muted, #6c6c80);
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #6c6c80;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.team-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary, #a0a0b8);
+}
+
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon-wrapper .input-icon {
+  position: absolute;
+  left: 14px;
+  color: #6c6c80;
+  pointer-events: none;
+}
+
+.input-icon-wrapper input {
+  width: 100%;
+  padding: 12px 14px 12px 42px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.input-icon-wrapper input:focus {
+  border-color: #6C5CE7;
+  background: rgba(108, 92, 231, 0.06);
+}
+
+/* Role Selector Pills */
+.role-selector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.role-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: var(--text-secondary, #a0a0b8);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.role-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.role-option.active {
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(168, 85, 247, 0.2));
+  border-color: #6C5CE7;
+  color: #a855f7;
+  box-shadow: 0 0 15px rgba(108, 92, 231, 0.2);
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.btn-secondary {
+  padding: 10px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  color: #a0a0b8;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Grid of Team Members */
+.team-members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.member-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px;
+  background: var(--bg-card, #12121a);
+  border: 1px solid var(--border, rgba(255, 255, 255, 0.06));
+  border-radius: 16px;
+  transition: transform 0.2s, border-color 0.2s;
+}
+
+.member-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(108, 92, 231, 0.3);
+}
+
+.member-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.member-avatar-lg {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-badge.role-admin {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.role-badge.role-freelancer {
+  background: rgba(0, 206, 201, 0.15);
+  color: #00cec9;
+  border: 1px solid rgba(0, 206, 201, 0.3);
+}
+
+.member-details {
+  margin-bottom: 20px;
+}
+
+.member-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.member-username {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #6C5CE7;
+  font-weight: 500;
+}
+
+.member-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 14px;
+}
+
+.btn-action-member {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.btn-reset-password {
+  color: #fdcb6e;
+  background: rgba(253, 203, 110, 0.1);
+  border: 1px solid rgba(253, 203, 110, 0.2);
+}
+
+.btn-reset-password:hover {
+  background: rgba(253, 203, 110, 0.2);
+}
+
+.btn-delete-member {
+  color: #e17055;
+  background: rgba(225, 112, 85, 0.1);
+  border: 1px solid rgba(225, 112, 85, 0.2);
+}
+
+.btn-delete-member:hover {
+  background: rgba(225, 112, 85, 0.2);
+}
+
+.reset-badge {
+  background: rgba(253, 203, 110, 0.15) !important;
+  color: #fdcb6e !important;
+}
+
+.form-hint {
+  font-size: 11px;
+  color: var(--text-muted, #6c6c80);
+  margin-top: 4px;
+}
+
+/* ===== RESPONSIVE STYLES ===== */
+@media (max-width: 768px) {
+  .team-header-card { flex-direction: column; align-items: flex-start; padding: 18px 20px; }
+  .header-info h2 { font-size: 20px; }
+  .btn-primary { width: 100%; justify-content: center; }
+  .team-members-grid { grid-template-columns: 1fr; gap: 14px; }
+  .member-card { padding: 18px; }
+  .member-avatar-lg { width: 44px; height: 44px; font-size: 16px; }
+  .member-name { font-size: 16px; }
+  .member-card-footer { flex-direction: column; gap: 8px; }
+  .btn-action-member { width: 100%; justify-content: center; }
+  .modal-content { max-width: 95vw; padding: 20px; }
+  .modal-title h3 { font-size: 18px; }
+  .role-selector { grid-template-columns: 1fr; gap: 8px; }
+  .modal-footer { flex-direction: column; }
+  .modal-footer button { width: 100%; text-align: center; justify-content: center; }
+}
+
+@media (max-width: 480px) {
+  .team-header-card { padding: 14px 16px; }
+  .header-info h2 { font-size: 18px; }
+  .header-info .subtitle { font-size: 12px; }
+  .member-card { padding: 14px; border-radius: 12px; }
+  .member-avatar-lg { width: 40px; height: 40px; font-size: 14px; }
+  .member-name { font-size: 15px; }
+  .member-username { font-size: 12px; }
+  .btn-action-member { font-size: 11px; padding: 8px; }
+  .modal-content { padding: 16px; border-radius: 14px; }
+  .icon-badge { width: 36px; height: 36px; border-radius: 10px; }
+}
+
