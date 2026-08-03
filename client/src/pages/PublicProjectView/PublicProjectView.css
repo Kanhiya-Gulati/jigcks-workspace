@@ -1,0 +1,29 @@
+.public-project-page {
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.client-preview-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, rgba(0, 206, 201, 0.15), rgba(108, 92, 231, 0.15));
+  border: 1px solid rgba(0, 206, 201, 0.3);
+  color: #00cec9;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+  .public-project-page {
+    padding: 12px;
+    gap: 16px;
+  }
+}

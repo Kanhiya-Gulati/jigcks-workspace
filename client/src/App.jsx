@@ -9,6 +9,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import ProjectDetail from './pages/ProjectDetail/ProjectDetail';
 import CreateProject from './pages/CreateProject/CreateProject';
 import ManageTeam from './pages/ManageTeam/ManageTeam';
+import PublicProjectView from './pages/PublicProjectView/PublicProjectView';
 import NotFound from './pages/NotFound/NotFound';
 
 import ChangePasswordModal from './components/ChangePasswordModal/ChangePasswordModal';
@@ -35,6 +36,9 @@ function App() {
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="/login" element={<Login />} />
           
+          {/* Public Client Live Preview Link (No Login Required) */}
+          <Route path="/public/project/:id" element={<PublicProjectView />} />
+
           <Route element={<ProtectedRoute />}>
             <Route path="/dashboard" element={<AppLayout><Dashboard /></AppLayout>} />
             <Route path="/projects/:id" element={<AppLayout><ProjectDetail /></AppLayout>} />

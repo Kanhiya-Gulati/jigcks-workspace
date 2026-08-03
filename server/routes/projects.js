@@ -5,6 +5,23 @@ const { protect, adminOnly } = require('../middleware/auth');
 
 const router = express.Router();
 
+// PUBLIC UNPROTECTED ROUTE FOR CLIENT LIVE PREVIEW
+router.get('/public/:id', async (req, res) => {
+    try {
+        const project = await Project.findById(req.params.id)
+            .populate('assignedTo', 'name email avatar')
+            .populate('createdBy', 'name');
+        
+        if (!project) {
+            return res.status(404).json({ success: false, message: 'Project not found' });
+        }
+
+        res.json({ success: true, data: project });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
 router.use(protect);
 
 router.get('/', async (req, res) => {

@@ -6,6 +6,38 @@ const { logActivity } = require('../utils/activityLogger');
 
 const router = express.Router();
 
+// PUBLIC UNPROTECTED TASK LIST FOR CLIENT LIVE PREVIEW
+router.get('/public/project/:projectId', async (req, res) => {
+    try {
+        const Comment = require('../models/Comment');
+        const mongoose = require('mongoose');
+
+        const tasks = await Task.find({ project: req.params.projectId })
+            .populate('assignedTo', 'name email avatar')
+            .sort({ createdAt: 1 });
+
+        const commentCounts = await Comment.aggregate([
+            { $match: { project: new mongoose.Types.ObjectId(req.params.projectId) } },
+            { $group: { _id: '$task', count: { $sum: 1 } } }
+        ]);
+
+        const commentMap = {};
+        commentCounts.forEach(c => {
+            commentMap[c._id.toString()] = c.count;
+        });
+
+        const tasksWithCommentCount = tasks.map(t => {
+            const doc = t.toObject();
+            doc.commentCount = commentMap[t._id.toString()] || 0;
+            return doc;
+        });
+
+        res.json({ success: true, data: tasksWithCommentCount });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+});
+
 router.use(protect);
 
 router.get('/project/:projectId', async (req, res) => {

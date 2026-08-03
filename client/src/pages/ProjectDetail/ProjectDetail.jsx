@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FiArrowLeft, FiPlus, FiX, FiTrash2, FiEdit2, FiActivity, FiCheckSquare, FiClock, FiRefreshCw, FiMessageSquare, FiSend, FiDownload, FiPrinter, FiCalendar } from 'react-icons/fi';
+import { FiArrowLeft, FiPlus, FiX, FiTrash2, FiEdit2, FiActivity, FiCheckSquare, FiClock, FiRefreshCw, FiMessageSquare, FiSend, FiDownload, FiPrinter, FiCalendar, FiShare2 } from 'react-icons/fi';
 import { getProject, getProjectTasks, getProjectActivities, getTaskComments, addComment, deleteComment, createTask, updateTask, updateTaskStatus, deleteTask, updateProject, getFreelancers } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import './ProjectDetail.css';
@@ -199,6 +199,15 @@ const ProjectDetail = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  const [copiedLink, setCopiedLink] = useState(false);
+
+  const handleShareClientLink = () => {
+    const publicUrl = `${window.location.origin}/public/project/${id}`;
+    navigator.clipboard.writeText(publicUrl);
+    setCopiedLink(true);
+    setTimeout(() => setCopiedLink(false), 3500);
   };
 
   const handleExportPDF = () => {
@@ -452,6 +461,9 @@ const ProjectDetail = () => {
             <span className={`status-badge status-${project.status || 'active'}`}>
               {project.status || 'Active'}
             </span>
+            <button className="export-btn share-link-btn" onClick={handleShareClientLink} title="Copy Live Client Preview Link (No Login Required)">
+              <FiShare2 size={14} /> {copiedLink ? '✓ Preview Link Copied!' : 'Share Client Link'}
+            </button>
             <button className="export-btn" onClick={handleExportCSV} title="Export Checklist to CSV / Excel">
               <FiDownload size={14} /> Export CSV
             </button>

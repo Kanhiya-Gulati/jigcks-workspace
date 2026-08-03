@@ -698,6 +698,17 @@ tbody tr:hover .action-btn {
   transform: translateY(-1px);
 }
 
+.share-link-btn {
+  background: rgba(168, 85, 247, 0.15) !important;
+  color: #a855f7 !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+}
+
+.share-link-btn:hover {
+  background: rgba(168, 85, 247, 0.3) !important;
+  border-color: #a855f7 !important;
+}
+
 /* Print / PDF Export Media Styles */
 @media print {
   body {
