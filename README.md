@@ -9,7 +9,7 @@
 [![MongoDB](https://img.shields.io/badge/Database-MongoDB_Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/)
 [![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](LICENSE)
 
-A state-of-the-art, ultra-responsive **MERN Stack Project Management & Freelancer Workspace Tool** featuring real-time task discussions, single-session token security, audit trail logging, interactive Gantt timeline views, deadline alerts, and 1-click CSV/PDF exports.
+A state-of-the-art, ultra-responsive **MERN Stack Project Management & Freelancer Workspace Tool** featuring real-time task discussions, single-session token security, audit trail logging, interactive Gantt timeline views, deadline alerts, 1-click CSV/PDF exports, and public client shareable preview links.
 
 [🌐 View Live Application](https://jigcks-workspace.netlify.app/) · [🐞 Report Bug](https://github.com/Kanhiya-Gulati/jigcks-workspace/issues) · [✨ Request Feature](https://github.com/Kanhiya-Gulati/jigcks-workspace/issues)
 
@@ -52,7 +52,7 @@ A state-of-the-art, ultra-responsive **MERN Stack Project Management & Freelance
 ---
 
 ### 5. 📊 Project Overview, Exports & View Tabs
-*Integrated header featuring overall progress bar, CSV/PDF export controls, and seamless view switcher tabs.*
+*Integrated header featuring overall progress bar, CSV/PDF export controls, Shareable Client Preview links, and seamless view switcher tabs.*
 
 ![Project Detail Header](docs/screenshots/project_detail.png)
 
@@ -60,33 +60,37 @@ A state-of-the-art, ultra-responsive **MERN Stack Project Management & Freelance
 
 ## 🌟 Key Features & Highlights
 
-### 🔐 1. Single-Session Token Security (Anti-Concurrent Login)
+### 🔗 1. Shareable Client Preview Links (No Login Required)
+- Generate 1-click shareable public links for clients to track real-time project progress, micro-task status badges, and Gantt timelines.
+- **Strict Read-Only Mode**: Clients can view overall completion percentages and task notes without needing an account, while edit/delete/status controls remain completely protected.
+
+### 🔐 2. Single-Session Token Security (Anti-Concurrent Login)
 - Custom JWT authentication with dynamic `crypto.randomUUID()` session tokens.
 - Automatic multi-device token validation. Logging in on a new browser immediately logs out prior sessions with a security alert.
 
-### 📱 2. Premium Responsive Glassmorphism UI
+### 📱 3. Premium Responsive Glassmorphism UI
 - Designed with vibrant dark mode aesthetics, dynamic HSL gradients, and glassmorphism panels.
 - 100% Mobile Responsive with custom sliding navigation drawer and mobile task card view.
 
-### 📜 3. Real-Time Activity Log & Audit Trail
+### 📜 4. Real-Time Activity Log & Audit Trail
 - Comprehensive event logging tracking task creations, status updates, reassignments, comments, and deletions.
 - Dedicated **Audit Trail** timeline with user avatars, roles, badges, and relative timestamps (*Just now*, *5m ago*).
 
-### 💬 4. Micro-Task Discussion & Commenting System
+### 💬 5. Micro-Task Discussion & Commenting System
 - Task-level discussion drawer with live comment posting and deletion.
 - **Title Badges**: Glowing purple pill chips (`💬 2 comments`) beside task names + glowing row border highlight for active discussions.
 - **Scoped Permissions**: Freelancers can post on assigned/unassigned tasks while viewing all other task notes in Read-Only mode.
 
-### 📥 5. 1-Click Checklist Export (CSV / Excel & Printable PDF)
+### 📥 6. 1-Click Checklist Export (CSV / Excel & Printable PDF)
 - **Export CSV**: Instant client-side generation of structured Excel-compatible `.csv` reports containing all tasks, assignees, priorities, and files.
 - **Print / PDF**: Custom `@media print` layout formatting clean printable reports directly from the browser.
 
-### 🔔 6. Notification Center & Deadline Alerts
+### 🔔 7. Notification Center & Deadline Alerts
 - Real-time notification drawer with unread count badges.
 - Instant notifications when comments or updates are posted by team members or Admins.
 - Includes 1-Click **Clear All** and individual trash icon cleanup.
 
-### 📊 7. Interactive Gantt Schedule Timeline View
+### 📊 8. Interactive Gantt Schedule Timeline View
 - Visual Phase Progress Gantt chart displaying phase completion percentages, assigned team members, assigned dates, and deadlines.
 
 ---
@@ -159,7 +163,7 @@ jigcks-workspace/
 │   ├── src/
 │   │   ├── components/         # Navbar, ProjectCard, Modals
 │   │   ├── context/            # AuthContext (Security & Heartbeat)
-│   │   ├── pages/              # Dashboard, ProjectDetail, ManageTeam, Login
+│   │   ├── pages/              # Dashboard, ProjectDetail, PublicProjectView, ManageTeam, Login
 │   │   ├── services/           # Axios API Interceptors & Endpoints
 │   │   └── App.jsx
 │   ├── package.json
