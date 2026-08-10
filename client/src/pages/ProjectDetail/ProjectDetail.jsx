@@ -1361,20 +1361,20 @@ const ProjectDetail = () => {
         </div>
       )}
 
-      {/* Task Discussion & Comments Right Slide-Over Drawer */}
+      {/* Task Discussion & Comments Center Modal */}
       {commentTask && (
-        <div className="task-drawer-overlay" onClick={() => setCommentTask(null)}>
-          <div className="task-drawer-panel" onClick={e => e.stopPropagation()}>
+        <div className="modal-overlay" onClick={() => setCommentTask(null)}>
+          <div className="comment-modal-card" onClick={e => e.stopPropagation()}>
 
-            {/* Drawer Header */}
-            <div className="task-drawer-header">
-              <div className="drawer-header-left">
+            {/* Modal Header */}
+            <div className="comment-modal-header">
+              <div className="modal-header-left">
                 <div className="task-tag-badge">
-                  <FiTag size={11} />
+                  <FiTag size={12} />
                   <span>TASK #{commentTask.taskNumber || ''}</span>
                 </div>
                 <h2>{commentTask.title}</h2>
-                <div className="drawer-header-meta">
+                <div className="modal-header-meta">
                   <span className={`drawer-status-badge status-${commentTask.status || 'pending'}`}>
                     <span className="dot" /> {commentTask.status === 'template-ready' ? 'Ready' : commentTask.status === 'in-progress' ? 'In Progress' : commentTask.status === 'completed' ? 'Completed' : 'Pending'}
                   </span>
@@ -1385,7 +1385,7 @@ const ProjectDetail = () => {
                   )}
                 </div>
               </div>
-              <button className="drawer-close-btn" onClick={() => setCommentTask(null)} aria-label="Close drawer">
+              <button className="modal-close-btn" onClick={() => setCommentTask(null)} aria-label="Close modal">
                 <FiX size={18} />
               </button>
             </div>
@@ -1393,7 +1393,7 @@ const ProjectDetail = () => {
             {/* Scrollable Comments Feed */}
             <div className="task-comment-body">
               {loadingComments ? (
-                <div className="loading-state" style={{ minHeight: '200px' }}>Loading discussion...</div>
+                <div className="loading-state" style={{ minHeight: '180px' }}>Loading discussion...</div>
               ) : taskComments.length === 0 ? (
                 <div className="empty-discussion-state">
                   <div className="empty-icon">💬</div>
@@ -1433,8 +1433,8 @@ const ProjectDetail = () => {
               )}
             </div>
 
-            {/* Drawer Input Footer */}
-            <div className="task-drawer-footer">
+            {/* Modal Input Footer */}
+            <div className="comment-modal-footer">
               {(user?.role === 'admin' || !commentTask.assignedTo || commentTask.assignedTo._id === user?._id || commentTask.assignedTo === user?._id) ? (
                 <form onSubmit={handleAddCommentSubmit} className="comment-form-stitch">
                   <input 
@@ -1454,7 +1454,6 @@ const ProjectDetail = () => {
                   <span>Only <strong>{commentTask.assignedTo?.name || 'assigned freelancer'}</strong> or Admin can post comments on this task. You are in read-only mode.</span>
                 </div>
               )}
-              <div className="footer-hint">Press Enter to send</div>
             </div>
 
           </div>
