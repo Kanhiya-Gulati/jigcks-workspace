@@ -768,40 +768,108 @@ const ProjectDetail = () => {
       {/* Phase Schedule Timeline View */}
       {activeTab === 'timeline' && (
         <div className="timeline-view-card glass-panel">
+          {/* Header */}
           <div className="timeline-view-header">
             <div>
-              <h3>📅 Project Schedule & Phase Progress Timeline</h3>
-              <p className="timeline-subtitle">
-                Assigned Date: <strong>{project?.assignDate ? new Date(project.assignDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '01 Aug 2026'}</strong> — Deadline Date: <strong>{project?.deadline ? new Date(project.deadline).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '13 Aug 2026'}</strong>
-              </p>
+              <h3>Project Timeline</h3>
+              <div className="timeline-subtitle">
+                <span>
+                  📅 Start:{' '}
+                  <strong>
+                    {project?.assignDate
+                      ? new Date(project.assignDate).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+                      : 'N/A'}
+                  </strong>
+                </span>
+                <span style={{ color: 'rgba(255,255,255,0.2)' }}>•</span>
+                <span style={{ color: '#ffb4ab' }}>
+                  🚩 Deadline:{' '}
+                  <strong>
+                    {project?.deadline
+                      ? new Date(project.deadline).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+                      : 'N/A'}
+                  </strong>
+                </span>
+              </div>
             </div>
           </div>
 
-          <div className="gantt-container">
-            {phaseTimelineData.map((item) => (
-              <div key={item.phase} className="gantt-row">
-                <div className="gantt-phase-info">
-                  <span className="step-badge">Phase {item.step}</span>
-                  <span className="gantt-phase-name">{item.phase}</span>
-                </div>
-                <div className="gantt-progress-wrapper">
-                  <div className="gantt-bar-bg">
-                    <div 
-                      className={`gantt-bar-fill ${item.percent === 100 ? 'done' : item.percent > 0 ? 'progress' : ''}`}
-                      style={{ width: `${Math.max(item.percent, 8)}%` }}
-                    >
-                      <span className="gantt-percent-text">{item.percent}%</span>
+          {/* Gantt Body */}
+          <div style={{ padding: '24px 32px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+            {phaseTimelineData.map((item, idx) => {
+              const isDone   = item.percent === 100;
+              const isActive = item.percent > 0 && item.percent < 100;
+              const stateClass = isDone ? 'phase-done' : isActive ? 'phase-active' : 'phase-todo';
+              const badgeState = isDone ? 'done' : isActive ? 'active' : 'todo';
+              const barClass   = isDone ? 'done-bar' : isActive ? 'active-bar' : 'scheduled-bar';
+              const fillClass  = isDone ? 'done' : 'progress';
+
+              return (
+                <div key={item.phase} style={{
+                  background: 'rgba(255,255,255,0.02)',
+                  border: '1px solid rgba(255,255,255,0.07)',
+                  borderRadius: '16px',
+                  padding: '20px 24px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '12px',
+                  borderLeft: isDone ? '3px solid #2edcd7' : isActive ? '3px solid #c6bfff' : '3px solid rgba(255,255,255,0.08)',
+                  transition: 'all 0.2s ease',
+                }}>
+                  {/* Phase top row */}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '8px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <span className={`step-badge ${badgeState}`}>Phase {item.step}</span>
+                      <span style={{
+                        fontSize: '14px', fontWeight: '600',
+                        fontFamily: "'Geist','Inter',monospace",
+                        color: isDone ? '#2edcd7' : isActive ? '#c6bfff' : '#929095',
+                      }}>
+                        {item.phase}
+                      </span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '12px', fontFamily: "'Geist','Inter',monospace", color: '#929095' }}>
+                      <span>
+                        <span style={{ fontWeight: 700, color: '#e1e3e4' }}>{item.completed}</span>/{item.total} Tasks
+                      </span>
+                      <span style={{ color: isDone ? '#2edcd7' : isActive ? '#c6bfff' : '#47464b', fontWeight: 700 }}>
+                        {item.percent}%
+                      </span>
                     </div>
                   </div>
-                  <div className="gantt-meta-row">
-                    <span className="gantt-count">{item.completed} / {item.total} Micro-Tasks Done</span>
-                    <span className="gantt-assignees">
-                      {item.assignees.length > 0 ? `Team: ${item.assignees.join(', ')}` : 'Unassigned'}
-                    </span>
+
+                  {/* Progress Bar */}
+                  <div style={{ height: '10px', background: 'rgba(255,255,255,0.05)', borderRadius: '99px', overflow: 'hidden', position: 'relative' }}>
+                    <div style={{
+                      height: '100%',
+                      width: `${Math.max(item.percent, item.percent > 0 ? 5 : 0)}%`,
+                      borderRadius: '99px',
+                      background: isDone
+                        ? 'linear-gradient(90deg, #2edcd7, #6C5CE7)'
+                        : isActive
+                        ? 'linear-gradient(90deg, rgba(64,41,186,0.8), #c6bfff)'
+                        : 'rgba(71,70,75,0.4)',
+                      boxShadow: isDone ? '0 0 10px rgba(46,220,215,0.5)' : isActive ? '0 0 10px rgba(198,191,255,0.3)' : 'none',
+                      transition: 'width 0.8s cubic-bezier(0.4,0,0.2,1)',
+                    }} />
                   </div>
+
+                  {/* Assignees row */}
+                  {item.assignees.length > 0 && (
+                    <div style={{ fontSize: '12px', color: '#929095', fontFamily: "'Geist','Inter',monospace" }}>
+                      👤 {item.assignees.join(', ')}
+                    </div>
+                  )}
                 </div>
+              );
+            })}
+
+            {phaseTimelineData.length === 0 && (
+              <div style={{ textAlign: 'center', padding: '48px 24px', color: '#929095' }}>
+                <div style={{ fontSize: '32px', marginBottom: '12px' }}>📅</div>
+                <p>No phase data available yet.</p>
               </div>
-            ))}
+            )}
           </div>
         </div>
       )}
