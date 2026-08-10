@@ -126,7 +126,7 @@ const Login = () => {
                 </>
               ) : (
                 <>
-                  Initialize Session
+                  Enter Workspace
                   <FiArrowRight className="btn-arrow" />
                 </>
               )}
