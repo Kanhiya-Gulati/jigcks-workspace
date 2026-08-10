@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { FiArrowLeft, FiPlus, FiX, FiTrash2, FiEdit2, FiActivity, FiCheckSquare, FiClock, FiRefreshCw, FiMessageSquare, FiSend, FiDownload, FiPrinter, FiCalendar, FiShare2, FiTag } from 'react-icons/fi';
+import { FiArrowLeft, FiPlus, FiX, FiTrash2, FiEdit2, FiActivity, FiCheckSquare, FiClock, FiRefreshCw, FiMessageSquare, FiSend, FiDownload, FiPrinter, FiCalendar, FiShare2 } from 'react-icons/fi';
 import { getProject, getProjectTasks, getProjectActivities, getTaskComments, addComment, deleteComment, createTask, updateTask, updateTaskStatus, deleteTask, updateProject, getFreelancers } from '../../services/api';
 import { useAuth } from '../../context/AuthContext';
 import './ProjectDetail.css';
@@ -1361,102 +1361,75 @@ const ProjectDetail = () => {
         </div>
       )}
 
-      {/* Task Discussion & Comments Right Slide-Over Drawer */}
+      {/* Task Discussion & Comments Modal */}
       {commentTask && (
-        <div className="task-drawer-overlay" onClick={() => setCommentTask(null)}>
-          <div className="task-drawer-panel" onClick={e => e.stopPropagation()}>
-
-            {/* Drawer Header */}
-            <div className="task-drawer-header">
-              <div className="drawer-header-left">
-                <div className="task-tag-badge">
-                  <FiTag size={11} />
-                  <span>TASK #{commentTask.taskNumber || ''}</span>
-                </div>
-                <h2>{commentTask.title}</h2>
-                <div className="drawer-header-meta">
-                  <span className={`drawer-status-badge status-${commentTask.status || 'pending'}`}>
-                    <span className="dot" /> {commentTask.status === 'template-ready' ? 'Ready' : commentTask.status === 'in-progress' ? 'In Progress' : commentTask.status === 'completed' ? 'Completed' : 'Pending'}
-                  </span>
-                  {commentTask.componentFile && (
-                    <span className="drawer-file-tag">
-                      <code>{commentTask.componentFile}</code>
-                    </span>
-                  )}
-                </div>
+        <div className="modal-overlay" onClick={() => setCommentTask(null)}>
+          <div className="modal-content glass-panel comment-modal-content" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <div className="comment-modal-title">
+                <span className="task-pill">Task #{commentTask.taskNumber || ''}</span>
+                <h3>{commentTask.title}</h3>
               </div>
-              <button className="drawer-close-btn" onClick={() => setCommentTask(null)} aria-label="Close drawer">
-                <FiX size={18} />
+              <button className="close-btn" onClick={() => setCommentTask(null)}>
+                <FiX />
               </button>
             </div>
 
-            {/* Scrollable Comments Feed */}
             <div className="task-comment-body">
               {loadingComments ? (
-                <div className="loading-state" style={{ minHeight: '200px' }}>Loading discussion...</div>
+                <div className="loading-state" style={{ minHeight: '150px' }}>Loading discussion...</div>
               ) : taskComments.length === 0 ? (
-                <div className="empty-discussion-state">
+                <div className="empty-state" style={{ padding: '30px 16px' }}>
                   <div className="empty-icon">💬</div>
                   <h4>No notes or comments yet</h4>
                   <p>Start the discussion with your team on this micro-task.</p>
                 </div>
               ) : (
                 <div className="comments-list">
-                  {taskComments.map(comment => {
-                    const isSelf = comment.user?._id === user?._id;
-                    return (
-                      <div key={comment._id} className={`comment-item ${isSelf ? 'comment-self' : ''}`}>
-                        <div className="comment-avatar" style={{ backgroundColor: comment.user?.avatar || '#6C5CE7' }}>
-                          {comment.user?.name ? comment.user.name.charAt(0).toUpperCase() : 'U'}
-                        </div>
-                        <div className="comment-content-wrapper">
-                          <div className="comment-top">
-                            <span className="comment-author">{isSelf ? 'You' : (comment.user?.name || 'User')}</span>
-                            <span className={`comment-role-badge role-${comment.user?.role || 'freelancer'}`}>
-                              {comment.user?.role || 'freelancer'}
-                            </span>
-                            <span className="comment-time">{formatTimeAgo(comment.createdAt)}</span>
-                            {(user?.role === 'admin' || user?._id === comment.user?._id) && (
-                              <button className="comment-del-btn" onClick={() => handleDeleteComment(comment._id)} title="Delete comment">
-                                <FiTrash2 size={12} />
-                              </button>
-                            )}
-                          </div>
-                          <div className="comment-bubble">
-                            <p className="comment-text">{comment.text}</p>
-                          </div>
-                        </div>
+                  {taskComments.map(comment => (
+                    <div key={comment._id} className="comment-item">
+                      <div className="comment-avatar" style={{ backgroundColor: comment.user?.avatar || '#6C5CE7' }}>
+                        {comment.user?.name ? comment.user.name.charAt(0).toUpperCase() : 'U'}
                       </div>
-                    );
-                  })}
+                      <div className="comment-bubble">
+                        <div className="comment-top">
+                          <span className="comment-author">{comment.user?.name || 'User'}</span>
+                          <span className="comment-role">({comment.user?.role || 'member'})</span>
+                          <span className="comment-time">{formatTimeAgo(comment.createdAt)}</span>
+                          {(user?.role === 'admin' || user?._id === comment.user?._id) && (
+                            <button className="comment-del-btn" onClick={() => handleDeleteComment(comment._id)} title="Delete comment">
+                              <FiTrash2 size={12} />
+                            </button>
+                          )}
+                        </div>
+                        <p className="comment-text">{comment.text}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
-            </div>
 
-            {/* Drawer Input Footer */}
-            <div className="task-drawer-footer">
+              {/* Comment Input Form or Read-Only Notice */}
               {(user?.role === 'admin' || !commentTask.assignedTo || commentTask.assignedTo._id === user?._id || commentTask.assignedTo === user?._id) ? (
-                <form onSubmit={handleAddCommentSubmit} className="comment-form-stitch">
+                <form onSubmit={handleAddCommentSubmit} className="comment-form">
                   <input 
                     type="text" 
-                    placeholder="Type your note or update here..." 
+                    placeholder="Write a comment or update for this task..." 
                     value={newCommentText}
                     onChange={e => setNewCommentText(e.target.value)}
                     required
                   />
-                  <button type="submit" className="comment-send-btn-stitch">
-                    Send Note <FiSend size={15} />
+                  <button type="submit" className="comment-send-btn">
+                    <FiSend size={16} /> Send
                   </button>
                 </form>
               ) : (
                 <div className="comment-readonly-notice">
                   <FiClock size={16} style={{ flexShrink: 0 }} />
-                  <span>Only <strong>{commentTask.assignedTo?.name || 'assigned freelancer'}</strong> or Admin can post comments on this task. You are in read-only mode.</span>
+                  <span>Only <strong>{commentTask.assignedTo?.name || 'assigned freelancer'}</strong> or Admin can post comments on this task. You are viewing in read-only mode.</span>
                 </div>
               )}
-              <div className="footer-hint">Press Enter to send</div>
             </div>
-
           </div>
         </div>
       )}
