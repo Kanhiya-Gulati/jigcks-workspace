@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { FiUser, FiLock, FiEye, FiEyeOff, FiAlertTriangle } from 'react-icons/fi';
+import { FiUser, FiLock, FiEye, FiEyeOff, FiAlertTriangle, FiArrowRight, FiShield } from 'react-icons/fi';
 import './Login.css';
 
 const Login = () => {
@@ -33,57 +33,113 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      <div className="animated-bg"></div>
-      <div className="login-card glass-panel">
+      {/* Ambient Glow Orbs */}
+      <div className="ambient-glow-purple"></div>
+      <div className="ambient-glow-cyan"></div>
+
+      {/* Grid pattern background */}
+      <svg className="grid-pattern" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="gridPattern" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#gridPattern)" />
+      </svg>
+
+      {/* Center Glass Panel */}
+      <div className="login-card">
+        {/* Inner top edge highlight */}
+        <div className="card-edge-highlight"></div>
+
+        {/* Header */}
         <div className="login-header">
+          <div className="logo-icon">
+            <span style={{ fontSize: '28px' }}>⚡</span>
+          </div>
           <h1 className="gradient-text">Jigcks Workspace</h1>
-          <p>Freelancer Project Management</p>
+          <p className="login-subtitle">FREELANCER PROJECT MANAGEMENT</p>
         </div>
 
+        {/* Session expired warning */}
         {isSessionExpired && (
           <div className="session-warning-notice">
-            <FiAlertTriangle size={20} style={{ flexShrink: 0 }} />
-            <span>Security Alert: You were automatically logged out because your account was logged in from another browser or device.</span>
+            <FiAlertTriangle size={18} style={{ flexShrink: 0 }} />
+            <span>Security Alert: You were automatically logged out because your account was logged in from another device.</span>
           </div>
         )}
 
+        {/* Error message */}
         {error && <div className="error-message shake">{error}</div>}
 
+        {/* Form */}
         <form onSubmit={handleSubmit} className="login-form">
+          {/* Username Input */}
           <div className="input-group">
-            <FiUser className="input-icon" />
-            <input
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              autoCapitalize="none"
-            />
+            <label className="input-label" htmlFor="username">Username</label>
+            <div className="input-wrapper">
+              <FiUser className="input-icon" />
+              <input
+                id="username"
+                type="text"
+                placeholder="Enter your username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+                autoCapitalize="none"
+                autoComplete="username"
+              />
+            </div>
           </div>
 
+          {/* Password Input */}
           <div className="input-group">
-            <FiLock className="input-icon" />
-            <input
-              type={showPassword ? 'text' : 'password'}
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <button
-              type="button"
-              className="toggle-password"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? <FiEyeOff /> : <FiEye />}
-            </button>
+            <label className="input-label" htmlFor="password">Password</label>
+            <div className="input-wrapper">
+              <FiLock className="input-icon" />
+              <input
+                id="password"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoComplete="current-password"
+              />
+              <button
+                type="button"
+                className="toggle-password"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </button>
+            </div>
           </div>
 
+          {/* Submit Button */}
           <button type="submit" className="login-btn" disabled={isSubmitting}>
-            {isSubmitting ? 'Signing in...' : 'Sign In'}
+            <span className="btn-content">
+              {isSubmitting ? (
+                <>
+                  <span className="spinner"></span>
+                  Authenticating...
+                </>
+              ) : (
+                <>
+                  Initialize Session
+                  <FiArrowRight className="btn-arrow" />
+                </>
+              )}
+            </span>
+            <div className="btn-shimmer"></div>
           </button>
         </form>
+
+        {/* Footer */}
+        <div className="login-footer">
+          <FiShield size={13} className="footer-shield" />
+          <span>Protected by Single-Device Session Security</span>
+        </div>
       </div>
     </div>
   );
