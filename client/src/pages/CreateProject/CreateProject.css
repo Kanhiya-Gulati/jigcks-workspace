@@ -255,7 +255,7 @@
 .freelancer-select-card {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   padding: 12px 14px;
   border-radius: 14px;
   background: rgba(25, 28, 29, 0.6);
@@ -313,9 +313,13 @@
 }
 
 .member-role-tag {
+  display: flex;
+  align-items: center;
+  gap: 5px;
   font-size: 11px;
   color: #929095;
   font-family: 'Geist', 'Inter', monospace;
+  margin-top: 1px;
 }
 
 /* Checkbox indicator */
