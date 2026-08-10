@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { getProjects } from '../../services/api';
 import ProjectCard from '../../components/ProjectCard/ProjectCard';
-import { FiFolder, FiCheckSquare, FiCheckCircle, FiUsers, FiPlus } from 'react-icons/fi';
+import { FiFolder, FiCheckSquare, FiCheckCircle, FiPlay, FiPlus, FiArrowRight, FiTrendingUp, FiAlertCircle } from 'react-icons/fi';
 import './Dashboard.css';
 
 const Dashboard = () => {
@@ -26,77 +26,108 @@ const Dashboard = () => {
   }, []);
 
   if (loading) {
-    return <div className="loading-state">Loading dashboard...</div>;
+    return (
+      <div className="dashboard-loading">
+        <div className="loading-spinner"></div>
+        <span>Loading dashboard...</span>
+      </div>
+    );
   }
 
-  // Dummy stats calculations
   const totalProjects = projects.length;
   const activeProjects = projects.filter(p => p.status === 'active').length;
-  // Tasks info would ideally come from backend summary API, mocking here based on projects
   const totalTasks = projects.reduce((acc, p) => acc + (p.taskCount || 0), 0);
   const completedTasks = projects.reduce((acc, p) => acc + (p.completedTaskCount || 0), 0);
 
+  const stats = [
+    {
+      label: 'Total Projects',
+      value: totalProjects,
+      icon: <FiFolder size={22} />,
+      color: 'cyan',
+      trend: '+12% from last month',
+      trendColor: 'cyan',
+      trendIcon: <FiTrendingUp size={14} />,
+    },
+    {
+      label: 'Total Micro-Tasks',
+      value: totalTasks,
+      icon: <FiCheckSquare size={22} />,
+      color: 'purple',
+      trend: '+5% this week',
+      trendColor: 'purple',
+      trendIcon: <FiTrendingUp size={14} />,
+    },
+    {
+      label: 'Completed Tasks',
+      value: completedTasks,
+      icon: <FiCheckCircle size={22} />,
+      color: 'cyan',
+      trend: 'Last completion 2h ago',
+      trendColor: 'muted',
+      trendIcon: null,
+    },
+    ...(isAdmin ? [{
+      label: 'Active Projects',
+      value: activeProjects,
+      icon: <FiPlay size={22} />,
+      color: 'purple',
+      trend: '2 nearing deadline',
+      trendColor: 'danger',
+      trendIcon: <FiAlertCircle size={14} />,
+    }] : []),
+  ];
+
   return (
     <div className="dashboard">
-      <div className="dashboard-header">
-        <div>
-          <h2>{isAdmin ? 'Dashboard' : 'My Projects'}</h2>
-          <p className="greeting">Welcome back, {user?.name}</p>
+
+      {/* Header */}
+      <header className="dashboard-header">
+        <div className="header-text">
+          <h1 className="dashboard-title">{isAdmin ? 'Dashboard' : 'My Projects'}</h1>
+          <p className="dashboard-greeting">Welcome back, {user?.name}</p>
         </div>
         {isAdmin && (
-          <Link to="/projects/new" className="btn-primary">
-            <FiPlus /> Create Project
+          <Link to="/projects/new" className="btn-create">
+            <FiPlus size={20} />
+            Create Project
           </Link>
         )}
-      </div>
+      </header>
 
-      <div className="stats-grid">
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(108, 92, 231, 0.1)', color: '#6C5CE7' }}>
-            <FiFolder size={24} />
-          </div>
-          <div className="stat-info">
-            <span className="stat-label">Total Projects</span>
-            <span className="stat-value">{totalProjects}</span>
-          </div>
-        </div>
-        
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(0, 206, 201, 0.1)', color: '#00cec9' }}>
-            <FiCheckSquare size={24} />
-          </div>
-          <div className="stat-info">
-            <span className="stat-label">Total Tasks</span>
-            <span className="stat-value">{totalTasks}</span>
-          </div>
-        </div>
-
-        <div className="stat-card">
-          <div className="stat-icon" style={{ background: 'rgba(0, 184, 148, 0.1)', color: '#00b894' }}>
-            <FiCheckCircle size={24} />
-          </div>
-          <div className="stat-info">
-            <span className="stat-label">Completed Tasks</span>
-            <span className="stat-value">{completedTasks}</span>
-          </div>
-        </div>
-
-        {isAdmin && (
-          <div className="stat-card">
-            <div className="stat-icon" style={{ background: 'rgba(253, 203, 110, 0.1)', color: '#fdcb6e' }}>
-              <FiUsers size={24} />
+      {/* Stats Grid */}
+      <section className="stats-grid">
+        {stats.map((stat, i) => (
+          <div key={i} className={`stat-card stat-card--${stat.color}`}>
+            <div className="stat-card-glow"></div>
+            <div className="stat-card-top">
+              <div className="stat-text">
+                <span className="stat-label">{stat.label}</span>
+                <span className="stat-value">{stat.value}</span>
+              </div>
+              <div className={`stat-icon-wrap stat-icon--${stat.color}`}>
+                {stat.icon}
+              </div>
             </div>
-            <div className="stat-info">
-              <span className="stat-label">Active Projects</span>
-              <span className="stat-value">{activeProjects}</span>
+            <div className={`stat-trend stat-trend--${stat.trendColor}`}>
+              {stat.trendIcon}
+              <span>{stat.trend}</span>
             </div>
           </div>
-        )}
-      </div>
+        ))}
+      </section>
 
-      <div className="projects-section">
-        <h3 className="section-title">Recent Projects</h3>
-        
+      {/* Recent Projects */}
+      <section className="projects-section">
+        <div className="section-header">
+          <h2 className="section-title">Recent Projects</h2>
+          {isAdmin && (
+            <Link to="/projects/new" className="view-all-btn">
+              View All <FiArrowRight size={16} />
+            </Link>
+          )}
+        </div>
+
         {projects.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">📂</div>
@@ -110,7 +141,7 @@ const Dashboard = () => {
             ))}
           </div>
         )}
-      </div>
+      </section>
     </div>
   );
 };
