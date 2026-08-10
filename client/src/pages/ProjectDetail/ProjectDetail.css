@@ -967,132 +967,409 @@ tbody tr:hover .action-btn {
   background: #5b4cc4;
 }
 
-/* Timeline & Gantt View */
+/* Timeline & Gantt View - Stitch Obsidian Flux Design */
 .timeline-view-card {
-  padding: 24px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 24px !important;
+  box-shadow: 0 32px 64px rgba(0, 0, 0, 0.5) !important;
 }
 
 .timeline-view-header {
-  margin-bottom: 24px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 32px 40px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-wrap: wrap;
+  gap: 16px;
 }
 
 .timeline-view-header h3 {
-  font-size: 20px;
-  color: #fff;
-  margin-bottom: 4px;
+  font-size: 42px;
+  font-weight: 700;
+  color: #e1e3e4;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
 }
 
 .timeline-subtitle {
-  font-size: 13px;
-  color: #a0a0b8;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 14px;
+  font-family: 'Geist', 'Inter', monospace;
+  color: #929095;
 }
 
 .timeline-subtitle strong {
-  color: #d4a853;
+  color: #2edcd7;
 }
 
+.timeline-header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.timeline-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(50, 53, 54, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e1e3e4;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Geist', 'Inter', monospace;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.timeline-filter-btn:hover {
+  background: rgba(55, 58, 59, 0.9);
+}
+
+.timeline-new-phase-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, rgba(64, 41, 186, 0.8) 0%, rgba(64, 41, 186, 0.9) 100%);
+  border: 1px solid rgba(198, 191, 255, 0.2);
+  color: #b4abff;
+  padding: 8px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Geist', 'Inter', monospace;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 0 20px rgba(198, 191, 255, 0.1);
+}
+
+.timeline-new-phase-btn:hover {
+  box-shadow: 0 0 24px rgba(198, 191, 255, 0.25);
+  color: #e4dfff;
+}
+
+/* Gantt Layout */
 .gantt-container {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  min-height: 400px;
 }
 
-.gantt-row {
-  display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 20px;
+
+/* Gantt Sidebar */
+.gantt-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(12, 15, 16, 0.5);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+}
+
+.gantt-sidebar-header {
+  height: 56px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
   align-items: center;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 12px;
-  padding: 16px 20px;
+  padding: 0 24px;
 }
 
-.gantt-phase-info {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.step-badge {
-  font-size: 10px;
-  font-weight: 700;
-  color: #a855f7;
+.gantt-sidebar-label {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Geist', 'Inter', monospace;
+  color: #929095;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.1em;
 }
 
-.gantt-phase-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: #fff;
+.gantt-sidebar-rows {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 0;
 }
 
-.gantt-progress-wrapper {
+/* Phase Row in Sidebar */
+.gantt-row {
+  height: 80px;
+  padding: 0 24px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  border-left: 2px solid transparent;
+}
+
+.gantt-row:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.gantt-row.phase-done   { border-left-color: #2edcd7; }
+.gantt-row.phase-active { border-left-color: #c6bfff; }
+.gantt-row.phase-todo   { border-left-color: transparent; opacity: 0.7; }
+
+.gantt-row-top {
+  display: flex;
+  align-items: center;
   gap: 8px;
 }
 
-.gantt-bar-bg {
-  height: 20px;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
+/* Phase Row Badge */
+.step-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  font-family: 'Geist', 'Inter', monospace;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.step-badge.done   { background: rgba(0, 13, 12, 0.8); color: #008885; }
+.step-badge.active { background: rgba(64, 41, 186, 0.4); color: #b4abff; }
+.step-badge.todo   { background: rgba(29, 32, 33, 1); color: #929095; }
+
+.gantt-phase-name {
+  font-size: 13px;
+  font-weight: 600;
+  font-family: 'Geist', 'Inter', monospace;
+  color: #e1e3e4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s;
+}
+
+.gantt-row.phase-done:hover .gantt-phase-name   { color: #2edcd7; }
+.gantt-row.phase-active:hover .gantt-phase-name { color: #c6bfff; }
+
+.gantt-phase-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-family: 'Geist', 'Inter', monospace;
+  color: #929095;
+}
+
+.gantt-phase-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.gantt-phase-dot.done   { background: #2edcd7; }
+.gantt-phase-dot.active { background: #c6bfff; }
+.gantt-phase-dot.todo   { background: #47464b; }
+
+/* Gantt Timeline Area */
+.gantt-timeline-area {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   position: relative;
 }
 
-.gantt-bar-fill {
-  height: 100%;
-  border-radius: 10px;
-  background: #6C5CE7;
+.gantt-date-header {
+  height: 56px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(17, 20, 21, 0.8);
+  backdrop-filter: blur(12px);
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding-right: 10px;
-  transition: width 0.6s ease;
+  overflow-x: auto;
+  flex-shrink: 0;
 }
 
-.gantt-bar-fill.progress {
-  background: linear-gradient(90deg, #f39c12, #fdcb6e);
+.gantt-date-col {
+  flex: 1;
+  min-width: 80px;
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 10px;
+  font-size: 11px;
+  font-family: 'Geist', 'Inter', monospace;
+  color: #929095;
+  font-weight: 500;
+  position: relative;
+}
+
+.gantt-date-col.weekend {
+  background: rgba(255, 255, 255, 0.01);
+  color: #c6bfff;
+}
+
+.gantt-date-col.deadline {
+  color: #ffb4ab;
+}
+
+.gantt-date-col.deadline::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: -9999px;
+  right: 0;
+  width: 1px;
+  background: rgba(255, 180, 171, 0.4);
+  pointer-events: none;
+}
+
+.gantt-body {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.gantt-body-inner {
+  position: relative;
+  min-height: 100%;
+}
+
+/* Gantt Bars */
+.gantt-bar-row {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.gantt-bar-bg {
+  position: absolute;
+  height: 40px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.gantt-bar-bg:hover {
+  filter: brightness(1.15);
+  transform: scaleY(1.05);
+}
+
+.gantt-bar-fill {
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .gantt-bar-fill.done {
-  background: linear-gradient(90deg, #00b894, #2ecc71);
+  background: linear-gradient(90deg, rgba(46, 220, 215, 0.4) 0%, rgba(46, 220, 215, 0.8) 100%);
+  border-right: 1px solid #2edcd7;
+  box-shadow: 0 0 15px rgba(46, 220, 215, 0.1);
+  width: 100%;
+}
+
+.gantt-bar-fill.progress {
+  background: linear-gradient(90deg, rgba(64, 41, 186, 0.6) 0%, rgba(198, 191, 255, 0.8) 100%);
+  border-right: 1px solid #c6bfff;
+  box-shadow: 0 0 10px rgba(198, 191, 255, 0.4);
+}
+
+.gantt-bar-bg.done-bar {
+  background: rgba(46, 220, 215, 0.08);
+  border: 1px solid rgba(46, 220, 215, 0.3);
+}
+
+.gantt-bar-bg.active-bar {
+  background: rgba(29, 32, 33, 0.5);
+  border: 1px solid rgba(198, 191, 255, 0.25);
+}
+
+.gantt-bar-bg.scheduled-bar {
+  background: rgba(25, 28, 29, 0.5);
+  border: 1px dashed rgba(71, 70, 75, 0.5);
+}
+
+.gantt-bar-bg.upcoming-bar {
+  background: rgba(25, 28, 29, 0.3);
+  border: 1px dashed rgba(71, 70, 75, 0.3);
+  opacity: 0.5;
+}
+
+.gantt-bar-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 12px;
+  z-index: 1;
+}
+
+.gantt-bar-label {
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'Geist', 'Inter', monospace;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
 }
 
 .gantt-percent-text {
   font-size: 11px;
-  font-weight: 800;
-  color: #fff;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  font-weight: 700;
+  font-family: 'Geist', 'Inter', monospace;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .gantt-meta-row {
   display: flex;
   justify-content: space-between;
-  font-size: 12px;
-  color: #a0a0b8;
+  align-items: center;
+  font-size: 11px;
+  color: #929095;
+  font-family: 'Geist', 'Inter', monospace;
+  padding: 2px 0;
 }
 
-.gantt-count {
-  font-weight: 600;
-  color: #fff;
+.gantt-count { font-weight: 600; color: #e1e3e4; }
+.gantt-assignees { color: #6C5CE7; font-weight: 500; }
+
+/* Grid background lines */
+.gantt-grid-bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  pointer-events: none;
+  z-index: 0;
 }
 
-.gantt-assignees {
-  color: #6C5CE7;
-  font-weight: 500;
+.gantt-grid-col {
+  flex: 1;
+  min-width: 80px;
+  border-right: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-/* View Switcher Tabs */
+.gantt-grid-col.weekend { background: rgba(255, 255, 255, 0.01); }
+.gantt-grid-col.deadline-col { border-right: 1px solid rgba(255, 180, 171, 0.2); }
+
+
+/* View Switcher Tabs — Stitch pill style */
 .view-switcher-tabs {
   display: flex;
-  gap: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  padding-bottom: 12px;
+  gap: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding-bottom: 16px;
   flex-wrap: wrap;
 }
 
@@ -1100,28 +1377,46 @@ tbody tr:hover .action-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #12121a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #a0a0b8;
-  padding: 10px 20px;
-  border-radius: 10px;
-  font-size: 14px;
-  font-weight: 600;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #929095;
+  padding: 10px 22px;
+  border-radius: 99px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: 'Geist', 'Inter', monospace;
+  letter-spacing: 0.02em;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .tab-btn:hover {
-  background: #1a1a2e;
-  color: #fff;
+  background: rgba(255, 255, 255, 0.04);
+  color: #e1e3e4;
+  border-color: rgba(255, 255, 255, 0.14);
 }
 
 .tab-btn.active {
-  background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(168, 85, 247, 0.2));
-  border-color: #6C5CE7;
-  color: #a855f7;
-  box-shadow: 0 0 15px rgba(108, 92, 231, 0.2);
+  background: rgba(64, 41, 186, 0.4);
+  border-color: rgba(108, 92, 231, 0.5);
+  color: #b4abff;
+  font-weight: 700;
+  box-shadow: 0 0 15px rgba(108, 92, 231, 0.15);
 }
+
+.tab-btn .tab-count {
+  background: rgba(180, 171, 255, 0.2);
+  color: #b4abff;
+  padding: 1px 7px;
+  border-radius: 99px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.tab-btn.active .tab-count {
+  background: rgba(180, 171, 255, 0.3);
+}
+
 
 /* Activity Log Card */
 .activity-log-card {
