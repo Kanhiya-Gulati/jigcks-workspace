@@ -241,19 +241,24 @@ const ProjectDetail = () => {
 
   const handleStatusToggle = async (taskId, currentStatus, assignedTo) => {
     if (user?.role !== 'admin' && assignedTo?._id !== user?._id) return;
-    
+
     let newStatus = 'pending';
     if (currentStatus === 'pending') newStatus = 'template-ready';
     else if (currentStatus === 'template-ready' || currentStatus === 'in-progress') newStatus = 'completed';
     else if (currentStatus === 'completed') newStatus = 'pending';
 
+    // ⚡ Optimistic update — UI changes instantly
+    setTasks(prev => prev.map(t => t._id === taskId ? { ...t, status: newStatus } : t));
+
     try {
       await updateTaskStatus(taskId, newStatus);
-      setTasks(tasks.map(t => t._id === taskId ? { ...t, status: newStatus } : t));
     } catch (err) {
       console.error('Failed to update status', err);
+      // Revert on failure
+      setTasks(prev => prev.map(t => t._id === taskId ? { ...t, status: currentStatus } : t));
     }
   };
+
 
   const handleAssigneeChange = async (taskId, newUserId) => {
     if (user?.role !== 'admin') return;
