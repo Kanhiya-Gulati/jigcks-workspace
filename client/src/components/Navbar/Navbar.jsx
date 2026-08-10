@@ -131,27 +131,26 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Notification Dropdown */}
+      {/* Notification Dropdown Drawer / Panel */}
       {isNotifOpen && (
-        <div className="notif-dropdown">
+        <div className="notif-dropdown glass-panel">
           <div className="notif-header">
-            <h3>Notifications</h3>
+            <h3>🔔 Workspace Notifications</h3>
             <div className="notif-header-actions">
               {notifications.length > 0 && (
-                <button className="clear-all-btn" onClick={handleClearAllNotifs}>
+                <button className="clear-all-btn" onClick={handleClearAllNotifs} title="Clear all notification history">
                   Clear All
                 </button>
               )}
               <button className="close-notif-btn" onClick={() => setIsNotifOpen(false)}>
-                <FiX size={15} />
+                <FiX size={16} />
               </button>
             </div>
           </div>
           <div className="notif-list">
             {notifications.length === 0 ? (
-              <div className="empty-notif">
-                <div className="empty-notif-icon">🔔</div>
-                <p>No notifications yet</p>
+              <div className="empty-notif" style={{ padding: '20px', textAlign: 'center', color: '#a0a0b8', fontSize: '13px' }}>
+                No notifications yet
               </div>
             ) : (
               notifications.map(n => (
@@ -161,7 +160,7 @@ const Navbar = () => {
                     <span className="notif-title">{n.title}</span>
                     <span className="notif-desc">{n.message}</span>
                   </div>
-                  <button className="notif-del-btn" onClick={(e) => handleDeleteNotif(e, n._id || n.id)} title="Delete">
+                  <button className="notif-del-btn" onClick={(e) => handleDeleteNotif(e, n._id || n.id)} title="Delete notification">
                     <FiTrash2 size={13} />
                   </button>
                 </div>
@@ -170,7 +169,6 @@ const Navbar = () => {
           </div>
         </div>
       )}
-
 
       {isOpen && <div className="mobile-overlay" onClick={toggleMenu}></div>}
       {isNotifOpen && <div className="notif-backdrop" onClick={() => setIsNotifOpen(false)}></div>}
