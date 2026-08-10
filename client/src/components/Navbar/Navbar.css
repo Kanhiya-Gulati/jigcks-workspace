@@ -4,8 +4,8 @@
   left: 0;
   width: 260px;
   height: 100vh;
-  background-color: var(--bg-card);
-  border-right: 1px solid var(--border);
+  background-color: #0A0A10;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
   display: flex;
   flex-direction: column;
   padding: 32px 0;
@@ -40,24 +40,26 @@
   align-items: center;
   gap: 12px;
   padding: 12px 16px;
-  border-radius: 8px;
-  color: var(--text-secondary);
+  border-radius: 10px;
+  color: #929095;
   font-weight: 500;
-  transition: all 0.3s ease;
-  border-left: 3px solid transparent;
+  font-family: 'Geist', 'Inter', monospace;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .nav-link:hover {
-  background-color: var(--bg-hover);
-  color: var(--text-primary);
+  background: rgba(50, 53, 54, 0.5);
+  color: #e1e3e4;
 }
 
 .nav-link.active {
-  background-color: var(--bg-hover);
-  color: var(--text-primary);
-  border-left: 3px solid;
-  border-image: var(--primary) 1;
-  background: linear-gradient(90deg, rgba(108, 92, 231, 0.1) 0%, transparent 100%);
+  background: rgba(64, 41, 186, 0.35);
+  color: #b4abff;
+  font-weight: 600;
 }
 
 .navbar-footer {
@@ -77,12 +79,16 @@
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background: var(--accent);
+  background: linear-gradient(135deg, #6C5CE7, #2edcd7);
   display: flex;
   justify-content: center;
   align-items: center;
   font-weight: 700;
   color: white;
+  font-size: 15px;
+  border: 1px solid rgba(46, 220, 215, 0.3);
+  box-shadow: 0 0 12px rgba(46, 220, 215, 0.15);
+  flex-shrink: 0;
 }
 
 .user-details {
@@ -177,131 +183,241 @@
   cursor: pointer;
 }
 
+/* ── Notification Dropdown — Stitch Obsidian Flux ── */
 .notif-dropdown {
   position: fixed;
-  top: 70px;
-  left: 275px;
-  width: 360px;
-  max-width: 90vw;
-  background: #12121a;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  padding: 18px;
+  top: 72px;
+  left: 272px;
+  width: 380px;
+  max-width: 92vw;
+  background: rgba(17, 20, 21, 0.97);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 20px;
+  padding: 0;
+  overflow: hidden;
   z-index: 1000;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
-  animation: slideUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 24px 56px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255,255,255,0.04);
+  animation: notifSlideIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@keyframes notifSlideIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .notif-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 14px;
-  padding-bottom: 10px;
+  padding: 18px 20px 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.notif-header h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #e1e3e4;
+  margin: 0;
+  font-family: 'Geist', 'Inter', monospace;
+  letter-spacing: -0.01em;
 }
 
 .notif-header-actions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .clear-all-btn {
-  background: rgba(255, 118, 117, 0.12);
-  border: 1px solid rgba(255, 118, 117, 0.3);
-  color: #ff7675;
+  background: rgba(255, 180, 171, 0.08);
+  border: 1px solid rgba(255, 180, 171, 0.2);
+  color: #ffb4ab;
   font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
+  font-weight: 600;
+  font-family: 'Geist', 'Inter', monospace;
+  padding: 4px 10px;
+  border-radius: 99px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.2s ease;
 }
 
 .clear-all-btn:hover {
-  background: rgba(255, 118, 117, 0.25);
+  background: rgba(255, 180, 171, 0.15);
   color: #fff;
-}
-
-.notif-del-btn {
-  background: none;
-  border: none;
-  color: #6c6c80;
-  cursor: pointer;
-  padding: 4px;
-  opacity: 0.6;
-  transition: opacity 0.2s;
-}
-
-.notif-del-btn:hover {
-  color: #ff7675;
-  opacity: 1;
-}
-
-.notif-header h3 {
-  font-size: 15px;
-  color: #fff;
-  margin: 0;
 }
 
 .close-notif-btn {
-  background: none;
-  border: none;
-  color: #6c6c80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: #929095;
   cursor: pointer;
-  padding: 4px;
+  padding: 5px;
+  transition: all 0.2s;
 }
-.close-notif-btn:hover { color: #fff; }
+.close-notif-btn:hover { color: #e1e3e4; background: rgba(255,255,255,0.08); }
 
+/* Notification List */
 .notif-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 0;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px 12px;
 }
 
+.notif-list::-webkit-scrollbar { width: 4px; }
+.notif-list::-webkit-scrollbar-track { background: transparent; }
+.notif-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 99px; }
+
+/* Notification Item */
 .notif-item {
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  padding: 10px 12px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-  border-radius: 10px;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+  cursor: default;
+  position: relative;
 }
 
+.notif-item:hover {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.notif-item.unread {
+  background: rgba(46, 220, 215, 0.04);
+  border-color: rgba(46, 220, 215, 0.12);
+}
+
+.notif-item.unread::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #2edcd7;
+  box-shadow: 0 0 6px rgba(46, 220, 215, 0.6);
+}
+
+/* Notif Icon */
 .notif-icon {
-  font-size: 18px;
+  font-size: 16px;
   flex-shrink: 0;
   margin-top: 2px;
+  color: #929095;
 }
-.notif-icon.deadline { color: #fdcb6e; }
+.notif-icon.comment { color: #b4abff; }
+.notif-icon.deadline { color: #ffb4ab; }
 .notif-icon.security { color: #6C5CE7; }
-.notif-icon.tasks { color: #00b894; }
+.notif-icon.tasks    { color: #2edcd7; }
 
+/* Notif Body */
 .notif-body {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
   flex: 1;
+  min-width: 0;
 }
 
 .notif-title {
   font-size: 13px;
   font-weight: 600;
-  color: #fff;
+  color: #e1e3e4;
+  font-family: 'Geist', 'Inter', monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .notif-desc {
   font-size: 11px;
-  color: #a0a0b8;
-  line-height: 1.3;
+  color: #929095;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .notif-time {
   font-size: 10px;
-  color: #6c6c80;
-  font-weight: 600;
+  color: #47464b;
+  font-weight: 500;
+  font-family: 'Geist', 'Inter', monospace;
+  margin-top: 2px;
+}
+
+/* Delete Button */
+.notif-del-btn {
+  background: none;
+  border: none;
+  color: #47464b;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+}
+
+.notif-item:hover .notif-del-btn { opacity: 1; }
+.notif-del-btn:hover { color: #ffb4ab; background: rgba(255,180,171,0.08); }
+
+/* Badge on bell icon */
+.notif-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #2edcd7;
+  color: #003735;
+  font-size: 9px;
+  font-weight: 800;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: 99px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #0A0A10;
+  box-shadow: 0 0 8px rgba(46, 220, 215, 0.5);
+}
+
+/* Empty notif */
+.empty-notif {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px !important;
+  gap: 8px;
+}
+
+.empty-notif-icon {
+  font-size: 28px;
+  opacity: 0.4;
+}
+
+.empty-notif p {
+  font-size: 13px;
+  color: #47464b;
+  font-family: 'Geist', 'Inter', monospace;
 }
 
 .notif-backdrop {
