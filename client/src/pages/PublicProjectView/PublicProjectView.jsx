@@ -79,6 +79,16 @@ const PublicProjectView = () => {
       if (!sections[sec][ph]) sections[sec][ph] = [];
       sections[sec][ph].push(task);
     });
+
+    // Natural numerical sorting for task numbers (1.1, 1.2 ... 1.10)
+    Object.keys(sections).forEach(sec => {
+      Object.keys(sections[sec]).forEach(ph => {
+        sections[sec][ph].sort((a, b) => 
+          (a.taskNumber || '').localeCompare(b.taskNumber || '', undefined, { numeric: true, sensitivity: 'base' })
+        );
+      });
+    });
+
     return sections;
   }, [filteredTasks]);
 

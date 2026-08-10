@@ -32,6 +32,10 @@ router.get('/public/project/:projectId', async (req, res) => {
             return doc;
         });
 
+        tasksWithCommentCount.sort((a, b) => 
+            (a.taskNumber || '').localeCompare(b.taskNumber || '', undefined, { numeric: true, sensitivity: 'base' })
+        );
+
         res.json({ success: true, data: tasksWithCommentCount });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
@@ -74,6 +78,10 @@ router.get('/project/:projectId', async (req, res) => {
             doc.commentCount = commentMap[t._id.toString()] || 0;
             return doc;
         });
+
+        tasksWithCommentCount.sort((a, b) => 
+            (a.taskNumber || '').localeCompare(b.taskNumber || '', undefined, { numeric: true, sensitivity: 'base' })
+        );
 
         res.json({ success: true, data: tasksWithCommentCount });
     } catch (error) {
